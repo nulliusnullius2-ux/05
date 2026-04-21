@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Core System</title>
+
+<style>
+html, body {
+    margin:0;
+    padding:0;
+    background:black;
+    color:#00ff88;
+    font-family:Consolas, monospace;
+    height:100%;
+    overflow:hidden;
+}
+
+#screen {
+    padding:12px;
+    height:100%;
+    overflow:auto;
+    white-space:pre-line;
+    font-size:13px;
+}
+
+.progress {
+    position:fixed;
+    bottom:0;
+    left:0;
+    height:3px;
+    background:#00ff88;
+    width:0%;
+    box-shadow:0 0 10px #00ff88;
+}
+
+.alert {
+    color:#ff4444;
+    text-shadow:0 0 6px red;
+}
+</style>
+</head>
+<body>
+
+<div id="screen"></div>
+<div id="bar" class="progress"></div>
+
+<script>
+const screen = document.getElementById("screen");
+const bar = document.getElementById("bar");
+
+let progress = 0;
+
+// ✍️ efekt pisania
+function typeLine(text, speed=10){
+    return new Promise(resolve=>{
+        let i=0;
+        let line="";
+        function type(){
+            if(i < text.length){
+                line += text[i];
+                screen.innerHTML = screen.innerHTML + text[i];
+                i++;
+                setTimeout(type, speed);
+                screen.scrollTop = screen.scrollHeight;
+            } else {
+                screen.innerHTML += "\n";
+                resolve();
+            }
+        }
+        type();
+    });
+}
+
+// 🧠 neutralne logi systemowe
+const logs = [
+"> Initializing core...",
+"> Loading modules...",
+"> Checking memory...",
+"> Syncing threads...",
+"> Verifying system...",
+"> Allocating buffers...",
+"> Connecting services...",
+"> Optimizing performance...",
+"> Running diagnostics...",
+"> Monitoring processes...",
+"> Balancing load...",
+"> Processing data stream...",
+"> Stabilizing core...",
+"> Rebuilding cache...",
+"> Validating structures...",
+"> Updating system tables...",
+"> Executing background tasks...",
+"> Cleaning memory blocks..."
+];
+
+// ⚠️ alerty (neutralne)
+const alerts = [
+"[WARN] High load detected",
+"[WARN] Rebalancing processes",
+"[NOTICE] Performance adjustment",
+"[INFO] Stabilizing runtime"
+];
+
+async function run(){
+
+    await typeLine("SECURE CORE BOOT SEQUENCE\n", 20);
+
+    for(let i=0;i<120;i++){
+
+        let line;
+
+        if(Math.random() < 0.15){
+            line = alerts[Math.floor(Math.random()*alerts.length)];
+            await typeLine(line, 5);
+        } else {
+            line = logs[Math.floor(Math.random()*logs.length)];
+            await typeLine(line, 5);
+        }
+
+        let speed = (Math.random()*8 + 2).toFixed(2);
+        await typeLine("> Transfer: " + speed + " MB/s", 5);
+
+        progress += Math.random()*1.2;
+        if(progress > 100) progress = 100;
+
+        bar.style.width = progress + "%";
+    }
+
+    await typeLine("\n[OK] System ready", 15);
+    await typeLine("[INFO] Simulation mode enabled", 15);
+}
+
+// 🚀 start
+run();
+
+// 🔁 dodatkowe logi (ciągłe)
+setInterval(()=>{
+    if(progress < 100){
+        let line = logs[Math.floor(Math.random()*logs.length)];
+        screen.innerHTML += line + "\n";
+        screen.scrollTop = screen.scrollHeight;
+    }
+}, 150);
+
+</script>
+
+</body>
+</html>
